@@ -11,7 +11,7 @@ const MainPage = () => {
       <Title>
         Tribia Quiz
         <br />
-        Ganme
+        Game
       </Title>
       <Button text="퀴즈 풀기" onClick={() => setStatus("quiz")} />
     </div>
