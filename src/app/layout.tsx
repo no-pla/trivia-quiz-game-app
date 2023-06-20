@@ -1,5 +1,6 @@
 import "./reset.css";
 import Head from "./head";
+import Recoil from "@/share/Recoil";
 
 export default function RootLayout({
   children,
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <Head />
-      <body>{children}</body>
+      <body>
+        <Recoil>{children}</Recoil>
+      </body>
     </html>
   );
 }
