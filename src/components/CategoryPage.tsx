@@ -4,6 +4,7 @@ import Button from "./Button";
 import styled from "@emotion/styled";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { getPageStatus, quizList } from "@/share/atom";
+import he from "he";
 
 const categories = [
   { value: "", name: "Any Category" },
@@ -33,6 +34,15 @@ const categories = [
   { value: "32", name: "Entertainment: Cartoon & Animations" },
 ];
 
+type IQuiz = {
+  category: string;
+  correct_answer: string;
+  difficulty: string;
+  incorrect_answers: string[];
+  question: string;
+  type: string;
+};
+
 const CategoryPage = () => {
   const setStatus = useSetRecoilState(getPageStatus);
   const setQuizList = useSetRecoilState(quizList);
@@ -45,15 +55,26 @@ const CategoryPage = () => {
     const difficulty = difficultySelect.current?.value;
     const type = typeSelect.current?.value;
 
-    let {
-      data: { results: quiz },
-    } = await axios.get(
-      `https://opentdb.com/api.php?amount=10${
-        category && `&category=${category}`
-      }${difficulty && `&difficulty=${difficulty}`}${type && `&type=${type}`}`
-    );
-
-    setQuizList(quiz);
+    await axios
+      .get(
+        `https://opentdb.com/api.php?amount=10${
+          category && `&category=${category}`
+        }${difficulty && `&difficulty=${difficulty}`}${type && `&type=${type}`}`
+      )
+      .then(({ data: { results } }) => {
+        let temp: any[] = [];
+        results?.map((result: IQuiz) => {
+          temp.push({
+            ...result,
+            question: he.decode(result?.question),
+            correct_answer: he.decode(result?.correct_answer),
+            incorrect_answers: result.incorrect_answers.map((incorrect) =>
+              he.decode(incorrect)
+            ),
+          });
+        });
+        setQuizList(temp);
+      });
     setStatus("quiz");
   };
 

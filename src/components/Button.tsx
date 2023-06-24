@@ -4,10 +4,15 @@ import React from "react";
 interface ButtonProps {
   text: string;
   onClick?: any;
+  value?: any;
 }
 
-const Button = ({ text, onClick }: ButtonProps) => {
-  return <StyledButton onClick={onClick}>{text}</StyledButton>;
+const Button = ({ text, onClick, value }: ButtonProps) => {
+  return (
+    <StyledButton value={value} onClick={onClick}>
+      {text}
+    </StyledButton>
+  );
 };
 
 export default Button;
