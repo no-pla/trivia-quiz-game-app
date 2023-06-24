@@ -39,6 +39,7 @@ type IQuiz = {
   correct_answer: string;
   difficulty: string;
   incorrect_answers: string[];
+  answers: string[];
   question: string;
   type: string;
 };
@@ -68,9 +69,15 @@ const CategoryPage = () => {
             ...result,
             question: he.decode(result?.question),
             correct_answer: he.decode(result?.correct_answer),
-            incorrect_answers: result.incorrect_answers.map((incorrect) =>
-              he.decode(incorrect)
-            ),
+            answers:
+              result.type === "multiple"
+                ? [
+                    he.decode(result?.correct_answer),
+                    ...result.incorrect_answers.map((incorrect) =>
+                      he.decode(incorrect)
+                    ),
+                  ].sort(() => Math.random() - 0.5)
+                : ["True", "False"],
           });
         });
         setQuizList(temp);

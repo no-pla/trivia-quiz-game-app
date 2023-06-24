@@ -5,6 +5,7 @@ type IQuiz = {
   correct_answer: string[] | boolean;
   difficulty: string;
   incorrect_answers: string[] | boolean;
+  answers: string[];
   question: string;
   type: string;
 };
