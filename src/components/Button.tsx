@@ -3,7 +3,7 @@ import React from "react";
 
 interface ButtonProps {
   text: string;
-  onClick: any;
+  onClick?: any;
 }
 
 const Button = ({ text, onClick }: ButtonProps) => {

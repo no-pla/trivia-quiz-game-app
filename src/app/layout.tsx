@@ -1,7 +1,6 @@
 import "./reset.css";
 import Head from "./head";
 import Recoil from "@/share/Recoil";
-import ReactQuery from "@/share/ReactQuery";
 
 export default function RootLayout({
   children,
@@ -12,9 +11,7 @@ export default function RootLayout({
     <html lang="ko">
       <Head />
       <body>
-        <ReactQuery>
-          <Recoil>{children}</Recoil>
-        </ReactQuery>
+        <Recoil>{children}</Recoil>
       </body>
     </html>
   );

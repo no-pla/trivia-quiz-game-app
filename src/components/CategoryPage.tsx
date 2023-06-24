@@ -2,8 +2,7 @@ import React, { useRef } from "react";
 import axios from "axios";
 import Button from "./Button";
 import styled from "@emotion/styled";
-import { useQuery } from "react-query";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { getPageStatus, quizList } from "@/share/atom";
 
 const categories = [
@@ -40,42 +39,27 @@ const CategoryPage = () => {
   const categorySelect = useRef<HTMLSelectElement>(null);
   const difficultySelect = useRef<HTMLSelectElement>(null);
   const typeSelect = useRef<HTMLSelectElement>(null);
-  const category = categorySelect.current?.value;
-  const difficulty = difficultySelect.current?.value;
-  const type = typeSelect.current?.value;
 
-  const { data: quiz, refetch } = useQuery(
-    "getQuizList",
-    async () => {
-      return await axios.get(
-        `https://opentdb.com/api.php?amount=10${
-          category && `&category=${category}`
-        }${difficulty && `&difficulty=${difficulty}`}${type && `&type=${type}`}`
-      );
-    },
-    {
-      enabled: false,
-      select: ({ data }) => data?.results,
-    }
-  );
+  const onClick = async () => {
+    const category = categorySelect.current?.value;
+    const difficulty = difficultySelect.current?.value;
+    const type = typeSelect.current?.value;
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    refetch();
+    let {
+      data: { results: quiz },
+    } = await axios.get(
+      `https://opentdb.com/api.php?amount=10${
+        category && `&category=${category}`
+      }${difficulty && `&difficulty=${difficulty}`}${type && `&type=${type}`}`
+    );
+
     setQuizList(quiz);
-    // let {
-    //   data: { results: quiz },
-    // } = await axios.get(
-    // `https://opentdb.com/api.php?amount=10${
-    //   category && `&category=${category}`
-    // }${difficulty && `&difficulty=${difficulty}`}${type && `&type=${type}`}`
-    // );
-    // console.log(quiz);
+    setStatus("quiz");
   };
 
   return (
     <Container>
-      <CotegoryContainer onSubmit={onSubmit}>
+      <CotegoryContainer>
         <Label>카테고리</Label>
         <Select ref={categorySelect}>
           {categories.map((category) => {
@@ -99,7 +83,7 @@ const CategoryPage = () => {
           <option value="boolean">True or False</option>
           <option value="multiple">multiple</option>
         </Select>
-        <Button text="주제 선택" onClick={() => setStatus("quiz")} />
+        <Button text="카테고리 선택" onClick={onClick} />
       </CotegoryContainer>
     </Container>
   );
@@ -107,7 +91,7 @@ const CategoryPage = () => {
 
 export default CategoryPage;
 
-const CotegoryContainer = styled.form`
+const CotegoryContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
