@@ -1,5 +1,6 @@
 "use client";
 
+import CategoryPage from "@/components/CategoryPage";
 import MainPage from "@/components/MainPage";
 import QuizPage from "@/components/Quiz/QuizPage";
 import ResultPage from "@/components/ResultPage";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <Container>
       {status === "main" && <MainPage />}
+      {status === "category" && <CategoryPage />}
       {status === "quiz" && <QuizPage />}
       {status === "result" && <ResultPage />}
     </Container>
@@ -35,6 +37,5 @@ const Container = styled.div`
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    gap: 40px;
   }
 `;

@@ -7,18 +7,22 @@ import { getPageStatus } from "@/share/atom";
 const MainPage = () => {
   const setStatus = useSetRecoilState(getPageStatus);
   return (
-    <div>
+    <Container>
       <Title>
         Tribia Quiz
         <br />
         Game
       </Title>
-      <Button text="퀴즈 풀기" onClick={() => setStatus("quiz")} />
-    </div>
+      <Button text="퀴즈 풀기" onClick={() => setStatus("category")} />
+    </Container>
   );
 };
 
 export default MainPage;
+
+const Container = styled.div`
+  gap: 40px;
+`;
 
 const Title = styled.h1`
   border: 1px solid gray;
