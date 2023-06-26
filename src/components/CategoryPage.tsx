@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import axios from "axios";
 import Button from "./Button";
 import styled from "@emotion/styled";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { getPageStatus, quizList } from "@/share/atom";
 import he from "he";
 
@@ -71,6 +71,15 @@ const CategoryPage = () => {
             incorrect_answers: result.incorrect_answers.map((incorrect) =>
               he.decode(incorrect)
             ),
+            answers:
+              result.type === "multiple"
+                ? [
+                    he.decode(result?.correct_answer),
+                    ...result.incorrect_answers.map((incorrect) =>
+                      he.decode(incorrect)
+                    ),
+                  ].sort(() => Math.random() - 0.5)
+                : ["True", "False"],
           });
         });
         setQuizList(temp);

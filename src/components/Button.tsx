@@ -7,9 +7,9 @@ interface ButtonProps {
   value?: any;
 }
 
-const Button = ({ text, onClick, value }: ButtonProps) => {
+const Button = ({ text, onClick }: ButtonProps) => {
   return (
-    <StyledButton value={value} onClick={onClick}>
+    <StyledButton value={text} onClick={onClick}>
       {text}
     </StyledButton>
   );

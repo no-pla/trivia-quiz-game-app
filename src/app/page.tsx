@@ -31,11 +31,10 @@ const Container = styled.div`
     width: 80%;
     height: object-fit;
     border-radius: 8px;
-    padding: 40px 20px;
+    padding: 32px 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
   }
 `;
