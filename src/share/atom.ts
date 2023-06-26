@@ -8,6 +8,7 @@ type IQuiz = {
   question: string;
   type: string;
   answers: string[];
+  selectedAnswer?: boolean;
 };
 
 export const getPageStatus = atom({

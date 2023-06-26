@@ -14,20 +14,24 @@ const QuizPage = () => {
 
   const onClick = (event: any) => {
     if (event.target.value !== quizsList[index].correct_answer) {
-      setWrongAnswer((prev: any) => [...prev, quizsList[index]]);
+      const wrongAnwer = {
+        ...quizsList[index],
+        selectedAnswer: event.target.value,
+      };
+      setWrongAnswer((prev: any) => [...prev, wrongAnwer]);
     }
     setIndex((prev) => prev + 1);
   };
 
   useEffect(() => {
-    resetWrongAnswer();
-  }, []);
-
-  useEffect(() => {
-    if (index === 9) {
+    if (index === 10) {
       setStatus("result");
     }
   }, [index]);
+
+  useEffect(() => {
+    resetWrongAnswer();
+  }, []);
 
   return (
     <Container>
@@ -67,7 +71,7 @@ const QuizInfo = styled.div`
   }
 `;
 
-const Question = styled.div`
+export const Question = styled.div`
   background-color: whitesmoke;
   margin: 20px 0 60px;
   border-radius: 8px;
@@ -75,10 +79,11 @@ const Question = styled.div`
 `;
 const QuestionContainer = styled.div``;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(100px, 1fr));
   gap: 12px;
+  margin: 6px 0;
   @media (max-width: 375px) {
     display: flex;
     flex-direction: column;
