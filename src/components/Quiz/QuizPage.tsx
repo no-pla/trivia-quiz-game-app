@@ -1,5 +1,5 @@
-import { getPageStatus, quizList, wrongAnswers } from "@/share/atom";
-import React, { useEffect, useState } from "react";
+import { getPageStatus, quizList, rightAnswers } from "@/share/atom";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import Button from "../Button";
 import styled from "@emotion/styled";
@@ -7,21 +7,21 @@ import StatusBar from "./StatusBar";
 
 const QuizPage = () => {
   const setStatus = useSetRecoilState(getPageStatus);
-  const setWrongAnswer = useSetRecoilState(wrongAnswers);
-  const resetWrongAnswer = useResetRecoilState(wrongAnswers);
+  const setRightAnswer = useSetRecoilState(rightAnswers);
+  const resetWrongAnswer = useResetRecoilState(rightAnswers);
   const quizsList = useRecoilValue(quizList);
   const [index, setIndex] = useState<number>(0);
 
-  const onClick = (event: any) => {
-    if (event.target.value !== quizsList[index].correct_answer) {
-      const wrongAnwer = {
-        ...quizsList[index],
-        selectedAnswer: event.target.value,
-      };
-      setWrongAnswer((prev: any) => [...prev, wrongAnwer]);
-    }
-    setIndex((prev) => prev + 1);
-  };
+  const onClick = useCallback(
+    (event: any) => {
+      const currentQuiz = quizsList[index];
+      if (event.target.value === currentQuiz.correct_answer) {
+        setRightAnswer((prev: number) => prev + 1);
+      }
+      setIndex((prev) => prev + 1);
+    },
+    [index, quizsList, setRightAnswer]
+  );
 
   useEffect(() => {
     if (index === 10) {

@@ -21,7 +21,7 @@ export const quizList = atom<IQuiz[]>({
   default: [],
 });
 
-export const wrongAnswers = atom<any>({
-  key: "wrongAnswers",
-  default: [],
+export const rightAnswers = atom<any>({
+  key: "rightAnswers",
+  default: 0,
 });

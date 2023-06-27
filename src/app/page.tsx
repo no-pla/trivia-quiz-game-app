@@ -6,20 +6,21 @@ import QuizPage from "@/components/Quiz/QuizPage";
 import ResultPage from "@/components/ResultPage";
 import { getPageStatus } from "@/share/atom";
 import styled from "@emotion/styled";
+import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Home() {
   const status = useRecoilValue(getPageStatus);
-  return (
-    <Container>
-      {status === "main" && <MainPage />}
-      {status === "category" && <CategoryPage />}
-      {status === "quiz" && <QuizPage />}
-      {status === "result" && <ResultPage />}
-    </Container>
-  );
-}
 
+  const pageComponent = useMemo(() => {
+    if (status === "main") return <MainPage />;
+    if (status === "category") return <CategoryPage />;
+    if (status === "quiz") return <QuizPage />;
+    if (status === "result") return <ResultPage />;
+  }, [status]);
+
+  return <Container>{pageComponent}</Container>;
+}
 const Container = styled.div`
   background-color: whitesmoke;
   height: 100vh;

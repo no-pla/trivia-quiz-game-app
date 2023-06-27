@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import styled from "@emotion/styled";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { getPageStatus, quizList } from "@/share/atom";
 import he from "he";
 
