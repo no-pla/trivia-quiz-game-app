@@ -57,10 +57,11 @@ const CategoryPage = () => {
   const onClick = async () => {
     setLoading(true);
     const category = categorySelect.current?.value;
+    const difficulty = difficultySelect.current?.value;
     const res = await fetch(
       `https://opentdb.com/api.php?amount=10${
         category && `&category=${category}`
-      }`
+      }${difficulty && `&difficulty=${difficulty}`}`
     );
     await res.json().then(({ results }) => {
       let temp: any[] = [];
